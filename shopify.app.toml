@@ -3,7 +3,7 @@
 client_id = "a9225ccfcef63e1f96e08da8f68b5e74"
 name = "some-test-app"
 handle = "some-test-app-12"
-application_url = "https://appeared-pose-ribbon-meetup.trycloudflare.com"
+application_url = "https://transcripts-relationships-inquire-luke.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = "read_products,write_products"
 
 [auth]
 redirect_urls = [
-  "https://appeared-pose-ribbon-meetup.trycloudflare.com/auth/callback",
-  "https://appeared-pose-ribbon-meetup.trycloudflare.com/auth/shopify/callback",
-  "https://appeared-pose-ribbon-meetup.trycloudflare.com/api/auth/callback"
+  "https://transcripts-relationships-inquire-luke.trycloudflare.com/auth/callback",
+  "https://transcripts-relationships-inquire-luke.trycloudflare.com/auth/shopify/callback",
+  "https://transcripts-relationships-inquire-luke.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

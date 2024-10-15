@@ -1,9 +1,11 @@
-import { Autocomplete, Box, Button, Card, ChoiceList, Icon, Layout, Page, Text } from "@shopify/polaris"
+import { Modal, TitleBar } from "@shopify/app-bridge-react";
+import { Autocomplete, Box, Button, Card, Checkbox, ChoiceList, Form, FormLayout, Icon, Layout, Page, Text, TextField } from "@shopify/polaris"
 import { SearchIcon } from '@shopify/polaris-icons'
 import { useMemo, useState, useCallback } from "react"
 
 
 export default function Products() {
+    const [openModal, setOpenModal] = useState(false)
 
     const deselectedOptions = useMemo(
         () => [
@@ -66,6 +68,23 @@ export default function Products() {
             autoComplete="off"
         />
     );
+
+    const [newsletter, setNewsletter] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = useCallback(() => {
+        setEmail('');
+        setNewsletter(false);
+    }, []);
+
+    const handleNewsLetterChange = useCallback(
+        (value: boolean) => setNewsletter(value),
+        [],
+    );
+
+    const handleEmailChange = useCallback((value: string) => setEmail(value), []);
+    const handlePasswordChange = useCallback((value: string) => setPassword(value), []);
     return (
         <Page title="Products">
             <Layout.Section>
@@ -83,13 +102,13 @@ export default function Products() {
                 </ui-modal>
                 <Card>
                     <Text as="h1" variant="bodyLg">Hello Text</Text>
-                    <Button variant="primary" onClick={() => shopify.toast.show('Hello pressed')}>Show here</Button>
-                        <Autocomplete
-                            options={options}
-                            selected={selectedOptions}
-                            onSelect={updateSelection}
-                            textField={textField}
-                        />
+                    <Button variant="primary" onClick={() => setOpenModal(!openModal)}>Open modal</Button>
+                    <Autocomplete
+                        options={options}
+                        selected={selectedOptions}
+                        onSelect={updateSelection}
+                        textField={textField}
+                    />
                     <ChoiceList
                         title="Company name"
                         choices={[
@@ -101,6 +120,46 @@ export default function Products() {
                         onChange={handleChange}
                     />
                 </Card>
+                <Modal id="my-modal" open={openModal}>
+                    <TitleBar title="Please login before procced"></TitleBar>
+                    <div style={{ width: '100%', height: "100%", padding: "30px"}}>
+                    <Form onSubmit={handleSubmit}>
+                        <FormLayout>
+                            <TextField
+                                value={email}
+                                onChange={handleEmailChange}
+                                label="Email"
+                                type="email"
+                                autoComplete="email"
+                                helpText={
+                                    <span>
+                                        Please enter your email
+                                    </span>
+                                }
+                            />
+                            <TextField
+                                value={password}
+                                onChange={handlePasswordChange}
+                                label="Password"
+                                type="password"
+                                autoComplete="password"
+                                helpText={
+                                    <span>
+                                        Please enter your password
+                                    </span>
+                                }
+                            />
+                             <Checkbox
+                                label="Remember the password"
+                                checked={newsletter}
+                                onChange={handleNewsLetterChange}
+                            />
+
+                            <Button submit variant="primary">Submit</Button>
+                        </FormLayout>
+                    </Form>
+                    </div>
+                </Modal>
             </Layout.Section>
         </Page>
     )
