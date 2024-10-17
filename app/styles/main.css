@@ -1,0 +1,50 @@
+.related-app-container {
+    max-width: 85%;
+    margin: 0 auto;
+}
+
+.relaated-product-content {
+    background: #fff;
+    border-radius: 10px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 0;
+}
+
+.paragraph {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.select-product {
+    margin-top: 20px;
+    padding: 11px 24px;
+    background-color: #008060;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.select-product:hover {
+    background-color: #006e52;
+}
+
+.select-product:active {
+    background-color: #003d2c;
+}
+
+.modal-container {
+    padding: 20px;
+}
+
+.product-list {
+    min-height: 500px;
+    height: 100%;
+    overflow-y: auto;
+}

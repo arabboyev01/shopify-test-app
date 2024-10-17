@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "e6297f164d9f9de89fa6d455d1e3e1b4"
+name = "test-app"
+handle = "test-app-10638"
+application_url = "https://outlined-january-handed-reviewer.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "abbos-dev.myshopify.com"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = ""
+
+[auth]
+redirect_urls = [
+  "https://outlined-january-handed-reviewer.trycloudflare.com/auth/callback",
+  "https://outlined-january-handed-reviewer.trycloudflare.com/auth/shopify/callback",
+  "https://outlined-january-handed-reviewer.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-10"
+
+[pos]
+embedded = false
