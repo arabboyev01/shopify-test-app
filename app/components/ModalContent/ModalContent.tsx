@@ -13,7 +13,6 @@ interface ModalProps {
 const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, setChecked }) => {
 
     const handleItemClick = () => {
-        console.log("enviroments", process.env)
         setChecked(!checked)
     }
     return (
