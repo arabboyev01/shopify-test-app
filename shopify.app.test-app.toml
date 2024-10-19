@@ -3,7 +3,7 @@
 client_id = "e6297f164d9f9de89fa6d455d1e3e1b4"
 name = "test-app"
 handle = "test-app-10638"
-application_url = "https://outlined-january-handed-reviewer.trycloudflare.com"
+application_url = "https://sees-sudan-dl-spice.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://outlined-january-handed-reviewer.trycloudflare.com/auth/callback",
-  "https://outlined-january-handed-reviewer.trycloudflare.com/auth/shopify/callback",
-  "https://outlined-january-handed-reviewer.trycloudflare.com/api/auth/callback"
+  "https://sees-sudan-dl-spice.trycloudflare.com/auth/callback",
+  "https://sees-sudan-dl-spice.trycloudflare.com/auth/shopify/callback",
+  "https://sees-sudan-dl-spice.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
