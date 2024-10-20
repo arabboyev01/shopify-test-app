@@ -3,7 +3,7 @@
 client_id = "a9225ccfcef63e1f96e08da8f68b5e74"
 name = "some-test-app"
 handle = "some-test-app-12"
-application_url = "https://transcripts-relationships-inquire-luke.trycloudflare.com"
+application_url = "https://mercury-wings-about-it.trycloudflare.com"
 embedded = true
 
 [build]
@@ -12,13 +12,13 @@ dev_store_url = "abbos-dev.myshopify.com"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_products,write_products"
+scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://transcripts-relationships-inquire-luke.trycloudflare.com/auth/callback",
-  "https://transcripts-relationships-inquire-luke.trycloudflare.com/auth/shopify/callback",
-  "https://transcripts-relationships-inquire-luke.trycloudflare.com/api/auth/callback"
+  "https://mercury-wings-about-it.trycloudflare.com/auth/callback",
+  "https://mercury-wings-about-it.trycloudflare.com/auth/shopify/callback",
+  "https://mercury-wings-about-it.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
