@@ -1,40 +1,28 @@
-import { json, LoaderFunction, type LoaderFunctionArgs } from "@remix-run/node"
-import { useFetcher, useLoaderData } from "@remix-run/react"
+import { type LoaderFunctionArgs } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
 import { Page, Text } from "@shopify/polaris"
 import ModalContent from "app/components/ModalContent/ModalContent"
 import { authenticate } from "app/shopify.server"
 import { useCallback, useState } from "react"
 
-// export const loader = async ({ request }: LoaderFunctionArgs) => {
-//   const { session, redirect } = await authenticate.admin(request);
-//     return { session , redirect}
-// }
-
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     try {
         const { admin } = await authenticate.admin(request)
+        console.log(admin)
         if (admin) {
-            console.log('Admin is authenticated:', admin)
             const response = await admin.graphql(
                 `#graphql
-                    query {
-                        products(first: 10) {
-                        edges {
-                            node {
-                            id
-                            title
-                            handle
-                            }
-                            cursor
+                   query{
+                     products(first: 1){
+                        edges{
+                        nodes{
+                          products
                         }
-                        pageInfo {
-                            hasNextPage
-                        }
-                        }
-                    }`,
-            );
-
-            console.log('Products Data:', response)
+                      }
+                     }
+                   }
+                `,
+            )
             if (!response.ok) {
                 throw new Error(`Failed to fetch products: ${response.statusText}`);
             }
@@ -43,7 +31,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
             return { products: data }
         } else {
-            throw new Error('Admin authentication failed.');
+            throw new Error('Admin authentication failed.')
         }
     } catch (error: unknown) {
         return { error: (error as Error).message || "An unexpected error occurred." }

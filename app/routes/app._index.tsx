@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import {
   Page,
@@ -93,6 +93,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Index() {
+
+  useEffect(() => {
+    redirect('/app/related-products-app')
+  }, [])
   const fetcher = useFetcher<typeof action>();
 
   const shopify = useAppBridge();

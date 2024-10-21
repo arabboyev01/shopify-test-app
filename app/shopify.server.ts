@@ -1,18 +1,20 @@
-import "@shopify/shopify-app-remix/adapters/node";
+import "@shopify/shopify-app-remix/adapters/node"
 import {
   ApiVersion,
   AppDistribution,
   shopifyApp,
-} from "@shopify/shopify-app-remix/server";
-import { PrismaSessionStorage } from "@shopify/shopify-app-session-storage-prisma";
-import { restResources } from "@shopify/shopify-api/rest/admin/2024-07";
-import prisma from "./db.server";
+} from "@shopify/shopify-app-remix/server"
+import { PrismaSessionStorage } from "@shopify/shopify-app-session-storage-prisma"
+import { restResources } from "@shopify/shopify-api/rest/admin/2024-07"
+import prisma from "./db.server"
+
+console.log(process.env.SHOPIFY_APP_URL)
 
 const shopify = shopifyApp({
   apiKey: process.env.SHOPIFY_API_KEY,
   apiSecretKey: process.env.SHOPIFY_API_SECRET as string,
   apiVersion: ApiVersion.October24,
-  scopes: ['read_products'],
+  scopes: process.env.SCOPES as any,
   appUrl: process.env.SHOPIFY_APP_URL as string,
   authPathPrefix: "/auth",
   sessionStorage: new PrismaSessionStorage(prisma),

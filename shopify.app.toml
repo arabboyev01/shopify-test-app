@@ -3,7 +3,7 @@
 client_id = "a9225ccfcef63e1f96e08da8f68b5e74"
 name = "some-test-app"
 handle = "some-test-app-12"
-application_url = "https://mercury-wings-about-it.trycloudflare.com"
+application_url = "https://peru-infrastructure-estates-registration.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://mercury-wings-about-it.trycloudflare.com/auth/callback",
-  "https://mercury-wings-about-it.trycloudflare.com/auth/shopify/callback",
-  "https://mercury-wings-about-it.trycloudflare.com/api/auth/callback"
+  "https://peru-infrastructure-estates-registration.trycloudflare.com/auth/callback",
+  "https://peru-infrastructure-estates-registration.trycloudflare.com/auth/shopify/callback",
+  "https://peru-infrastructure-estates-registration.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
