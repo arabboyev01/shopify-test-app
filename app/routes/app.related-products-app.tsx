@@ -1,35 +1,23 @@
-import { type LoaderFunctionArgs } from "@remix-run/node"
+import { LoaderFunctionArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { Page, Text } from "@shopify/polaris"
+import { productsSchema } from "app/api/schemas/schemas"
 import ModalContent from "app/components/ModalContent/ModalContent"
 import { authenticate } from "app/shopify.server"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     try {
         const { admin } = await authenticate.admin(request)
-        console.log(admin)
         if (admin) {
-            const response = await admin.graphql(
-                `#graphql
-                   query{
-                     products(first: 1){
-                        edges{
-                        nodes{
-                          products
-                        }
-                      }
-                     }
-                   }
-                `,
-            )
+            const response = await admin.graphql(productsSchema)
             if (!response.ok) {
-                throw new Error(`Failed to fetch products: ${response.statusText}`);
+                throw new Error(`Failed to fetch products: ${response.statusText}`)
             }
 
-            const data = await response.json()
+            const data: any = await response.json()
 
-            return { products: data }
+            return { products: data?.data?.products?.edges }
         } else {
             throw new Error('Admin authentication failed.')
         }
@@ -39,20 +27,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export default function Products() {
+    const products = useLoaderData<typeof loader>()
+
     const [openModal, setOpenModal] = useState(false)
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState<string[]>([])
 
-    const data = useLoaderData<typeof loader>()
-    console.log(data)
+    const handleOpenModal = () => setOpenModal(!openModal)
 
-    const handleOpenModal = () => {
-        setOpenModal(!openModal)
+    const handleChange = (id: string) => {
+        if (checked.includes(id)) {
+            setChecked(checked.filter(checkedId => checkedId !== id))
+        } else {
+            setChecked([...checked, id])
+        }
     }
-
-    const handleChange = useCallback(
-        (newChecked: boolean) => setChecked(newChecked),
-        [],
-    )
 
     return (
         <div className="related-app-container">
@@ -63,7 +51,12 @@ export default function Products() {
                     <button onClick={handleOpenModal} className="select-product">Select your First Product </button>
                 </div>
             </Page>
-            <ModalContent openModal={openModal} checked={checked} handleChange={handleChange} setChecked={setChecked} />
+            <ModalContent 
+                openModal={openModal} 
+                checked={checked} 
+                handleChange={handleChange} 
+                products={products}
+            />
         </div>
     )
 }
