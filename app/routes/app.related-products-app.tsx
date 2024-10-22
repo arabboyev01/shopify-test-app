@@ -5,6 +5,7 @@ import { Page, Text } from "@shopify/polaris"
 import ModalContent from "app/components/ModalContent/ModalContent"
 import { authenticate } from "app/shopify.server"
 import { productsSchema } from "app/api/schemas/schemas"
+import { useAppBridge } from "@shopify/app-bridge-react"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     try {
@@ -27,6 +28,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export default function Products() {
+
+    const shopify = useAppBridge()
+    console.log(shopify)
 
     const products = useLoaderData<typeof loader>()
 

@@ -28,6 +28,7 @@ export default function App() {
         </Link>
         <Link to="/app/related-products-app">Main Page</Link>
         <Link to="/app/customizer">Customizer</Link>
+        <Link to="/app/settings">Settings</Link>
       </NavMenu>
       <Outlet />
     </AppProvider>
