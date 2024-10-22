@@ -13,7 +13,7 @@ interface ModalProps {
 
 
 const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, products }) => {
-    
+
     return (
         <Modal open={openModal} id="my-modal">
             <TitleBar title="Select product">
@@ -25,23 +25,24 @@ const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, produc
                     <TextField label="" placeholder="Search Products" onChange={() => { }} autoComplete="off" />
                 </div>
                 <div className="product-list">
-                    {!products && <Loader />}
-                    {products?.products?.map((product: any) =>
-                        <div className="product-item" onClick={() => handleChange(product.node.id)} key={product.node.id}>
-                            <Checkbox
-                                label=""
-                                checked={checked?.includes(product.node.id)}
-                                onChange={() => handleChange(product.node.id)}
-                            />
-                            <Thumbnail
-                                size="small"
-                                source={ImageIcon}
-                                alt=""
-                            />
-                            <Text variant="bodyMd" as="p">
-                                {product.node.handle}
-                            </Text>
-                        </div>
+                    {!products ? <Loader /> : (
+                        products?.products?.map((product: any) =>
+                            <div className="product-item" onClick={() => handleChange(product.node.id)} key={product.node.id}>
+                                <Checkbox
+                                    label=""
+                                    checked={checked?.includes(product.node.id)}
+                                    onChange={() => handleChange(product.node.id)}
+                                />
+                                <Thumbnail
+                                    size="small"
+                                    source={product.node.media.edges[0].node.preview.image.url}
+                                    alt=""
+                                />
+                                <Text variant="bodyMd" as="p">
+                                    {product.node.handle}
+                                </Text>
+                            </div>
+                        )
                     )}
                 </div>
             </div>

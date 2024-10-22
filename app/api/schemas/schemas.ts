@@ -14,6 +14,7 @@ export const productsSchema = `
               preview {
                 image {
                     id
+                    url
                   }
               }
             }
