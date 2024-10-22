@@ -11,6 +11,7 @@ interface ModalProps {
     products: any
 }
 
+
 const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, products }) => {
     
     return (
@@ -26,7 +27,7 @@ const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, produc
                 <div className="product-list">
                     {!products && <Loader />}
                     {products?.products?.map((product: any) =>
-                        <div className="product-item" onClick={() => handleChange(product.node.id)}>
+                        <div className="product-item" onClick={() => handleChange(product.node.id)} key={product.node.id}>
                             <Checkbox
                                 label=""
                                 checked={checked?.includes(product.node.id)}

@@ -1,33 +1,23 @@
-import { LoaderFunctionArgs } from "@remix-run/node"
+import { type LoaderFunctionArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { Page, Text } from "@shopify/polaris"
-import { productsSchema } from "app/api/schemas/schemas"
+import { products } from "app/api/loaders/products"
+import { singleProduct } from "app/api/loaders/singlepProduct"
 import ModalContent from "app/components/ModalContent/ModalContent"
 import { authenticate } from "app/shopify.server"
 import { useState } from "react"
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-    try {
-        const { admin } = await authenticate.admin(request)
-        if (admin) {
-            const response = await admin.graphql(productsSchema)
-            if (!response.ok) {
-                throw new Error(`Failed to fetch products: ${response.statusText}`)
-            }
-
-            const data: any = await response.json()
-
-            return { products: data?.data?.products?.edges }
-        } else {
-            throw new Error('Admin authentication failed.')
-        }
-    } catch (error: unknown) {
-        return { error: (error as Error).message || "An unexpected error occurred." }
-    }
+const loader = async ({ request }: LoaderFunctionArgs) => {
+   return products(request, authenticate)
+}
+const action = async ({ request }: LoaderFunctionArgs) => {
+    return singleProduct(request, authenticate)
 }
 
 export default function Products() {
     const products = useLoaderData<typeof loader>()
+    // const singleProduct = useLoaderData<typeof action>()
+    // console.log("singleProduct", singleProduct)
 
     const [openModal, setOpenModal] = useState(false)
     const [checked, setChecked] = useState<string[]>([])

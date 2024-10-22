@@ -3,7 +3,7 @@
 client_id = "a9225ccfcef63e1f96e08da8f68b5e74"
 name = "some-test-app"
 handle = "some-test-app-12"
-application_url = "https://insert-rolling-c-cashiers.trycloudflare.com"
+application_url = "https://watching-mambo-facilitate-progress.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://insert-rolling-c-cashiers.trycloudflare.com/auth/callback",
-  "https://insert-rolling-c-cashiers.trycloudflare.com/auth/shopify/callback",
-  "https://insert-rolling-c-cashiers.trycloudflare.com/api/auth/callback"
+  "https://watching-mambo-facilitate-progress.trycloudflare.com/auth/callback",
+  "https://watching-mambo-facilitate-progress.trycloudflare.com/auth/shopify/callback",
+  "https://watching-mambo-facilitate-progress.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
