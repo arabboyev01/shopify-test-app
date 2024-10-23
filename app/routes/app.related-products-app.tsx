@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs } from "@remix-run/node"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useLoaderData } from "@remix-run/react"
 import { Page, Text } from "@shopify/polaris"
 import ModalContent from "app/components/ModalContent/ModalContent"
@@ -46,6 +46,28 @@ export default function Products() {
             setChecked([...checked, id])
         }
     }
+
+    const getSingleProduct = useCallback(async () => {
+        const res = await fetch(`https://${shopify.config.shop}.myshopify.com/admin/api/2024-01/graphql.json`, {
+            method: 'POST',
+            body: JSON.stringify({
+                query: `
+                    query GetProduct($id: ID!) {
+                        product(id: $id) {
+                        title
+                        }
+                    }
+                `,
+                variables: { id: 'gid://shopify/Product/1234567890' },
+            }),
+        });
+        const { data } = await res.json();
+        console.log(data);
+    }, [shopify])
+
+    useEffect(() => {
+        getSingleProduct()
+    }, [getSingleProduct])
 
     return (
         <div className="related-app-container">
