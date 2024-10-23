@@ -1,12 +1,11 @@
 import { type FC } from "react"
 import { TitleBar, Modal } from "@shopify/app-bridge-react"
 import { TextField, Checkbox, Thumbnail, Text } from "@shopify/polaris"
-import ImageIcon from '../../assets/images/ImageIcon.svg'
 import Loader from "../Spinners/Loader"
 
 interface ModalProps {
     openModal: boolean
-    checked: string[]
+    checked: string
     handleChange: (newChecked: string) => void
     products: any
 }
@@ -26,11 +25,15 @@ const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, produc
                 </div>
                 <div className="product-list">
                     {!products ? <Loader /> : (
-                        products?.products?.map((product: any) =>
-                            <div className="product-item" onClick={() => handleChange(product.node.id)} key={product.node.id}>
+                        products?.products?.map((product: any) => {
+                            const isActive = checked === product.node.id
+                            const className = checked
+                                ? isActive ? 'product-item' : 'product-item active'
+                                : 'product-item';
+                            return <div className={className} onClick={() => handleChange(product.node.id)} key={product.node.id}>
                                 <Checkbox
                                     label=""
-                                    checked={checked?.includes(product.node.id)}
+                                    checked={isActive}
                                     onChange={() => handleChange(product.node.id)}
                                 />
                                 <Thumbnail
@@ -42,7 +45,7 @@ const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, produc
                                     {product.node.handle}
                                 </Text>
                             </div>
-                        )
+                        })
                     )}
                 </div>
             </div>
