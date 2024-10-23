@@ -1,14 +1,12 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node"
-import { useCallback, useEffect, useState } from "react"
+import { useState } from "react"
 import { useLoaderData } from "@remix-run/react"
 import { Page, Text } from "@shopify/polaris"
 import ModalContent from "app/components/ModalContent/ModalContent"
-import shopify, { authenticate } from "app/shopify.server"
+import { authenticate } from "app/shopify.server"
 import { productsSchema } from "app/api/schemas/schemas"
-import { useAppBridge } from "@shopify/app-bridge-react"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-    console.log(shopify)
     try {
         const { admin } = await authenticate.admin(request)
         if (admin) {
@@ -30,18 +28,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Products() {
 
-    const shopify = useAppBridge()
-
     const products = useLoaderData<typeof loader>()
-    console.log(products)
 
     const [openModal, setOpenModal] = useState(false)
     const [checked, setChecked] = useState<string>('')
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
-    }
 
     const handleChange = (id: string) => {
         if (checked === id) {
@@ -51,17 +41,9 @@ export default function Products() {
         }
     }
 
-    const getSingleProduct = useCallback(async () => {
-        const res = await fetch(`https://${shopify.config.shop}/admin/api/2024-10/graphql.json`, {
-            method: 'GET',
-        });
-        const { data } = await res.json();
-        console.log(data);
-    }, [shopify])
-
-    useEffect(() => {
-        getSingleProduct()
-    }, [getSingleProduct])
+    const getSingleProduct = async () => {
+        
+    }
 
     return (
         <div className="related-app-container">
@@ -69,7 +51,7 @@ export default function Products() {
                 <div className="related-product-content">
                     <img src="https://cdn.shopify.com/s/files/1/2376/3301/products/emptystate-files.png" alt="empty" width="128" height="128" />
                     <Text as="p" variant="bodyLg">You do not have any related products</Text>
-                    <button onClick={handleOpenModal} className="select-product">Select your First Product </button>
+                    <button onClick={() => shopify.modal.show('my-modal')} className="select-product">Select your First Product </button>
                 </div>
             </Page>
             <ModalContent 
@@ -77,7 +59,6 @@ export default function Products() {
                 checked={checked} 
                 handleChange={handleChange} 
                 products={products}
-                loading={loading}
             />
         </div>
     )

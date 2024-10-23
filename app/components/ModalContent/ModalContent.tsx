@@ -8,11 +8,10 @@ interface ModalProps {
     checked: string
     handleChange: (newChecked: string) => void
     products: any
-    loading: boolean
 }
 
 
-const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, products, loading }) => {
+const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, products }) => {
 
     return (
         <Modal open={openModal} id="my-modal">

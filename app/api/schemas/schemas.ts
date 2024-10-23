@@ -7,6 +7,17 @@ export const productsSchema = `
           id
           title
           handle
+          hasOutOfStockVariants
+          priceRangeV2{
+            maxVariantPrice{
+              amount
+            }
+          }
+          compareAtPriceRange{
+            maxVariantCompareAtPrice{
+              amount
+            }
+          }
           media(first: 1){
             edges {
               node {
