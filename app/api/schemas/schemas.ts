@@ -30,21 +30,13 @@ export const productsSchema = `
 }`
 
 export const singleProductQuery = `
+#graphql
 query getProductById($id: ID!) {
   product(id: $id) {
     id
     title
     handle
     descriptionHtml
-    variants(first: 5) {
-      edges {
-        node {
-          id
-          title
-          price
-        }
-      }
-    }
   }
 }
 `;

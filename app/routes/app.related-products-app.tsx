@@ -1,13 +1,14 @@
-import { type LoaderFunctionArgs } from "@remix-run/node"
+import { json, type LoaderFunctionArgs } from "@remix-run/node"
 import { useCallback, useEffect, useState } from "react"
 import { useLoaderData } from "@remix-run/react"
 import { Page, Text } from "@shopify/polaris"
 import ModalContent from "app/components/ModalContent/ModalContent"
-import { authenticate } from "app/shopify.server"
+import shopify, { authenticate } from "app/shopify.server"
 import { productsSchema } from "app/api/schemas/schemas"
 import { useAppBridge } from "@shopify/app-bridge-react"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+    console.log(shopify)
     try {
         const { admin } = await authenticate.admin(request)
         if (admin) {
@@ -18,7 +19,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
             const data: any = await response.json()
 
-            return { products: data?.data?.products?.edges }
+            return json({ products: data?.data?.products?.edges })
         } else {
             throw new Error('Admin authentication failed.')
         }
@@ -30,17 +31,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Products() {
 
     const shopify = useAppBridge()
-    console.log(shopify)
 
     const products = useLoaderData<typeof loader>()
+    console.log(products)
 
     const [openModal, setOpenModal] = useState(false)
-    const [checked, setChecked] = useState<string[]>([])
-    const [loading, setLoading] = useState(false)
-
-    const handleOpenModal = () => {
-        setLoading(true)
-        setOpenModal(!openModal)
+    const [checked, setChecked] = useState<string>('')
 
         setTimeout(() => {
             setLoading(false)
@@ -48,26 +44,16 @@ export default function Products() {
     }
 
     const handleChange = (id: string) => {
-        if (checked.includes(id)) {
-            setChecked(checked.filter(checkedId => checkedId !== id))
+        if (checked === id) {
+            setChecked("")
         } else {
-            setChecked([...checked, id])
+            setChecked(id)
         }
     }
 
     const getSingleProduct = useCallback(async () => {
-        const res = await fetch(`https://${shopify.config.shop}.myshopify.com/admin/api/2024-01/graphql.json`, {
-            method: 'POST',
-            body: JSON.stringify({
-                query: `
-                    query GetProduct($id: ID!) {
-                        product(id: $id) {
-                        title
-                        }
-                    }
-                `,
-                variables: { id: 'gid://shopify/Product/1234567890' },
-            }),
+        const res = await fetch(`https://${shopify.config.shop}/admin/api/2024-10/graphql.json`, {
+            method: 'GET',
         });
         const { data } = await res.json();
         console.log(data);
