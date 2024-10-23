@@ -1,33 +1,25 @@
-import { Frame, Navigation } from "@shopify/polaris"
-import { HomeIcon, OrderIcon, ProductIcon } from '@shopify/polaris-icons'
+import { Frame, Icon } from "@shopify/polaris"
+import { settingSidebar } from "app/statics/setting"
 
 export default function Settings() {
     return (
-        <Frame>
-            <Navigation location="/">
-                <Navigation.Section
-                    items={[
-                        {
-                            url: '#',
-                            label: 'Home',
-                            icon: HomeIcon,
-                        },
-                        {
-                            url: '#',
-                            excludePaths: ['#'],
-                            label: 'Orders',
-                            icon: OrderIcon,
-                            badge: '15',
-                        },
-                        {
-                            url: '#',
-                            excludePaths: ['#'],
-                            label: 'Products',
-                            icon: ProductIcon,
-                        },
-                    ]}
-                />
-            </Navigation>
-        </Frame>
+        <div className="setting-container">
+            <div className="sidebar">
+                {settingSidebar.map(({ id, name, icon }) => {
+                    return (
+                    <div className="sidebar-item" key={id}>
+                        <div className="left-stick"></div>
+                        <div className="item">
+                                <Icon
+                                    source={icon}
+                                    tone="base"
+                                />
+                            <p className="item-name">{name}</p>
+                        </div>
+                    </div>
+                )
+                })}
+            </div>
+        </div>
     )
 }
