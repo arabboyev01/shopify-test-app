@@ -1,7 +1,6 @@
 import { type FC } from "react"
 import { TitleBar, Modal } from "@shopify/app-bridge-react"
 import { TextField, Checkbox, Thumbnail, Text } from "@shopify/polaris"
-import ImageIcon from '../../assets/images/ImageIcon.svg'
 import Loader from "../Spinners/Loader"
 
 interface ModalProps {
@@ -9,10 +8,11 @@ interface ModalProps {
     checked: string[]
     handleChange: (newChecked: string) => void
     products: any
+    loading: boolean
 }
 
 
-const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, products }) => {
+const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, products, loading }) => {
 
     return (
         <Modal open={openModal} id="my-modal">
@@ -25,7 +25,7 @@ const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, produc
                     <TextField label="" placeholder="Search Products" onChange={() => { }} autoComplete="off" />
                 </div>
                 <div className="product-list">
-                    {!products ? <Loader /> : (
+                    {!products || loading ? <Loader /> : (
                         products?.products?.map((product: any) =>
                             <div className="product-item" onClick={() => handleChange(product.node.id)} key={product.node.id}>
                                 <Checkbox

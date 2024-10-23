@@ -3,7 +3,7 @@
 client_id = "a9225ccfcef63e1f96e08da8f68b5e74"
 name = "some-test-app"
 handle = "some-test-app-12"
-application_url = "https://coupons-reasonable-rivers-telecommunications.trycloudflare.com"
+application_url = "https://merchants-perfect-donor-environments.trycloudflare.com"
 embedded = true
 
 [build]
@@ -19,23 +19,26 @@ scopes = "read_products"
 redirect_urls = [
   "https://coupons-reasonable-rivers-telecommunications.trycloudflare.com/auth/callback",
   "https://coupons-reasonable-rivers-telecommunications.trycloudflare.com/auth/shopify/callback",
-  "https://coupons-reasonable-rivers-telecommunications.trycloudflare.com/api/auth/callback"
+  "https://coupons-reasonable-rivers-telecommunications.trycloudflare.com/api/auth/callback",
+  "https://merchants-perfect-donor-environments.trycloudflare.com/auth/callback",
+  "https://merchants-perfect-donor-environments.trycloudflare.com/auth/shopify/callback",
+  "https://merchants-perfect-donor-environments.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2024-10"
 
   [[webhooks.subscriptions]]
-  uri = "/webhooks/customers/data_request"
   compliance_topics = [ "customers/data_request" ]
+  uri = "/webhooks/customers/data_request"
 
   [[webhooks.subscriptions]]
-  uri = "/webhooks/customers/redact"
   compliance_topics = [ "customers/redact" ]
+  uri = "/webhooks/customers/redact"
 
   [[webhooks.subscriptions]]
-  uri = "/webhooks/shop/redact"
   compliance_topics = [ "shop/redact" ]
+  uri = "/webhooks/shop/redact"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]

@@ -36,8 +36,16 @@ export default function Products() {
 
     const [openModal, setOpenModal] = useState(false)
     const [checked, setChecked] = useState<string[]>([])
+    const [loading, setLoading] = useState(false)
 
-    const handleOpenModal = () => setOpenModal(!openModal)
+    const handleOpenModal = () => {
+        setLoading(true)
+        setOpenModal(!openModal)
+
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+    }
 
     const handleChange = (id: string) => {
         if (checked.includes(id)) {
@@ -83,6 +91,7 @@ export default function Products() {
                 checked={checked} 
                 handleChange={handleChange} 
                 products={products}
+                loading={loading}
             />
         </div>
     )
