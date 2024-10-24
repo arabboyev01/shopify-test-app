@@ -1,4 +1,6 @@
-import { Card, Divider, Frame, Icon } from "@shopify/polaris"
+import { Icon } from "@shopify/polaris"
+import Languages from "app/components/Setting/Languages"
+import OnlineStore from "app/components/Setting/OnlineStore"
 import Synchronize from "app/components/Setting/Synchronize"
 import { settingSidebar } from "app/statics/setting"
 import { useState } from "react"
@@ -25,6 +27,8 @@ export default function Settings() {
             </div>
             <div className="sidebar-content">
                 {active === 0 && <Synchronize />}
+                {active === 1 && <Languages />}
+                {active === 2 && <OnlineStore />}
             </div>
         </div>
     )

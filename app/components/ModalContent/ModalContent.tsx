@@ -4,17 +4,16 @@ import { TextField, Checkbox, Thumbnail, Text } from "@shopify/polaris"
 import Loader from "../Spinners/Loader"
 
 interface ModalProps {
-    openModal: boolean
     checked: string
     handleChange: (newChecked: string) => void
     products: any
 }
 
 
-const ModalContent: FC<ModalProps> = ({ openModal, checked, handleChange, products }) => {
+const ModalContent: FC<ModalProps> = ({ checked, handleChange, products }) => {
 
     return (
-        <Modal open={openModal} id="my-modal">
+        <Modal id="my-modal">
             <TitleBar title="Select product">
                 <button variant="primary" disabled={!checked.length}>Select</button>
                 <button onClick={() => shopify.modal.hide('my-modal')}>Cancel</button>

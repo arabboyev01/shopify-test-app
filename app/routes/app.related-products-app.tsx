@@ -30,7 +30,6 @@ export default function Products() {
 
     const products = useLoaderData<typeof loader>()
 
-    const [openModal, setOpenModal] = useState(false)
     const [checked, setChecked] = useState<string>('')
 
     const handleChange = (id: string) => {
@@ -41,9 +40,6 @@ export default function Products() {
         }
     }
 
-    const getSingleProduct = async () => {
-        
-    }
 
     return (
         <div className="related-app-container">
@@ -55,7 +51,6 @@ export default function Products() {
                 </div>
             </Page>
             <ModalContent 
-                openModal={openModal} 
                 checked={checked} 
                 handleChange={handleChange} 
                 products={products}
