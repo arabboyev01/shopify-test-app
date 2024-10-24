@@ -7,15 +7,14 @@ interface ModalProps {
     checked: string
     handleChange: (newChecked: string) => void
     products: any
+    handleSingleRequest: () => void
 }
 
-
-const ModalContent: FC<ModalProps> = ({ checked, handleChange, products }) => {
-
+const ModalContent: FC<ModalProps> = ({ checked, handleChange, products, handleSingleRequest }) => {
     return (
         <Modal id="my-modal">
             <TitleBar title="Select product">
-                <button variant="primary" disabled={!checked.length}>Select</button>
+                <button variant="primary" disabled={!checked.length} onClick={handleSingleRequest}>Select</button>
                 <button onClick={() => shopify.modal.hide('my-modal')}>Cancel</button>
             </TitleBar>
             <div className="modal-container">
@@ -24,7 +23,7 @@ const ModalContent: FC<ModalProps> = ({ checked, handleChange, products }) => {
                 </div>
                 <div className="product-list">
                     {!products ? <Loader /> : (
-                        products?.products?.map((product: any) => {
+                        products?.map((product: any) => {
                             const isActive = checked === product.node.id
                             const className = checked
                                 ? isActive ? 'product-item' : 'product-item active'

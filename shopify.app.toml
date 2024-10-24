@@ -3,7 +3,7 @@
 client_id = "a9225ccfcef63e1f96e08da8f68b5e74"
 name = "some-test-app"
 handle = "some-test-app-12"
-application_url = "https://mv-til-petroleum-agency.trycloudflare.com"
+application_url = "https://titans-reliable-microwave-mali.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://mv-til-petroleum-agency.trycloudflare.com/auth/callback",
-  "https://mv-til-petroleum-agency.trycloudflare.com/auth/shopify/callback",
-  "https://mv-til-petroleum-agency.trycloudflare.com/api/auth/callback"
+  "https://titans-reliable-microwave-mali.trycloudflare.com/auth/callback",
+  "https://titans-reliable-microwave-mali.trycloudflare.com/auth/shopify/callback",
+  "https://titans-reliable-microwave-mali.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

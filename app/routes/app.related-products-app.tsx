@@ -1,26 +1,51 @@
-import { json, type LoaderFunctionArgs } from "@remix-run/node"
-import { useState } from "react"
-import { useLoaderData } from "@remix-run/react"
+import type { LoaderFunction } from "@remix-run/node"
+import { useEffect, useState } from "react"
+import { useLoaderData, useSearchParams } from "@remix-run/react"
 import { Page, Text } from "@shopify/polaris"
 import ModalContent from "app/components/ModalContent/ModalContent"
-import { authenticate } from "app/shopify.server"
-import { productsSchema } from "app/api/schemas/schemas"
+import { apiVersion, authenticate } from "app/shopify.server"
+import { productsSchema, singleProductQuery } from "app/api/schemas/schemas"
+import { useAppBridge } from "@shopify/app-bridge-react"
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader: LoaderFunction = async ({ request }) => {
+    const { session, admin } = await authenticate.admin(request)
+    const { shop, accessToken } = session
+    const url = new URL(request.url)
+    const checkedParam = url.searchParams.get('checked')
     try {
-        const { admin } = await authenticate.admin(request)
-        if (admin) {
-            const response = await admin.graphql(productsSchema)
-            if (!response.ok) {
-                throw new Error(`Failed to fetch products: ${response.statusText}`)
+
+        const response = await fetch(`https://${shop}/admin/api/${apiVersion}/graphql.json`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/graphql",
+                "X-Shopify-Access-Token": accessToken!
+            },
+            body: productsSchema
+        })
+
+        let singleProductData = null
+
+        if(checkedParam){
+            const match = checkedParam.match(/(\d+)$/); // Matches digits at the end of the string
+            const productId = match ? match[0] : null
+
+            const singleProductResponse = await admin.rest.resources.Product.find({
+                session: session,
+                id: Number(productId) as number,
+            })
+            if (singleProductResponse){
+                singleProductData = singleProductResponse
             }
-
-            const data: any = await response.json()
-
-            return json({ products: data?.data?.products?.edges })
-        } else {
-            throw new Error('Admin authentication failed.')
         }
+
+        if (response.ok){
+            const data = await response.json()
+            const { data: { products: { edges } }  } = data
+            return { edges, singleProduct: singleProductData || null }
+        }
+
+        return null
+
     } catch (error: unknown) {
         return { error: (error as Error).message || "An unexpected error occurred." }
     }
@@ -29,6 +54,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Products() {
 
     const products = useLoaderData<typeof loader>()
+
+    const [singleProducts, setSingleProducts] = useState<any[]>([])
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [addedIds, setAddedIds] = useState<Set<string>>(new Set())
 
     const [checked, setChecked] = useState<string>('')
 
@@ -40,6 +69,27 @@ export default function Products() {
         }
     }
 
+    useEffect(() => {
+        if (products?.singleProduct) {
+            const productId = products.singleProduct.id
+
+            if (!addedIds.has(productId)) {
+                setSingleProducts((prev) => [products.singleProduct]);
+                setAddedIds((prev) => new Set(prev).add(productId))
+                
+            } else {
+                console.log(`Product with ID ${productId} already added.`)
+                setSingleProducts([products.singleProduct])
+            }
+        }
+    }, [products])
+
+    const handleSingleRequest = () => {
+        setSearchParams({ checked })
+        shopify.modal.hide('my-modal')
+    }
+
+    console.log(singleProducts)
 
     return (
         <div className="related-app-container">
@@ -53,7 +103,8 @@ export default function Products() {
             <ModalContent 
                 checked={checked} 
                 handleChange={handleChange} 
-                products={products}
+                products={products?.edges}
+                handleSingleRequest={handleSingleRequest}
             />
         </div>
     )

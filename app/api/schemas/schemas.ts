@@ -40,14 +40,23 @@ export const productsSchema = `
     }
 }`
 
-export const singleProductQuery = `
-#graphql
-query getProductById($id: ID!) {
-  product(id: $id) {
-    id
-    title
-    handle
-    descriptionHtml
-  }
+export const singleProductQuery = (id: string) => {
+  return`
+    #graphql
+      query {
+        product(id: ${id}) {
+          id
+          handle
+          media(first: 1) {
+            nodes{
+              preview{
+                image {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+  `
 }
-`;
