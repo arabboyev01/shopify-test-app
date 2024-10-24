@@ -182,18 +182,18 @@
 
 .setting-container {
     width: 100%;
-    padding: 30px;
+    padding: 30px 10px;
     display: flex;
     gap: 20px;
 }
 
 .sidebar {
-    min-width: 230px;
+    min-width: 250px;
     padding: 20px;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
 }
 
 .sidebar-item {
@@ -205,9 +205,11 @@
 }
 
 .left-stick {
-    width: 3px;
-    height: 100%;
+    width: 4px;
+    height: 35px;
     background-color: #008060;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .item {
@@ -216,16 +218,30 @@
     justify-content: start;
     gap: 12px;
     padding: 8px;
-    background-color: #EDEEEF;
     width: 100%;
     cursor: pointer;
+}
+.active-item {    
+    background-color: #EDEEEF;
 }
 
 .item-name {
     color: #202223;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
-    color: #007B5c;
     width: 100%;
     text-align: left;
+}
+.active-name {
+    color: #007B5c;
+}
+
+.sync-header {
+    font-size: 16px;
+    font-weight: 600;
+}
+.sync-description {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 8px;
 }
